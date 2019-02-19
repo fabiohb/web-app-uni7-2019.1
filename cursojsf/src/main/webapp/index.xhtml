@@ -15,7 +15,11 @@
     <h:outputText value="#{msg['page.index.title']}" />
     <h:form>
         <h:commandLink action="ajuda?faces-redirect=true" 
-          value="#{msg['page.ajuda.title']}" />
+          value="#{msg['page.ajuda.title']}" /><br/>
+        <h:commandLink action="#{guessBean.init}"
+          value="#{msg['page.guess.title']}" /><br/>
+        <h:commandLink action="usuarios?faces-redirect=true"
+          value="#{msg['page.usuarios.title']}" /><br/>
     </h:form>
 </h:body>
 
