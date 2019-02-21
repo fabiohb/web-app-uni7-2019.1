@@ -50,4 +50,8 @@ public class UsuarioBean {
 		usuarioBusiness.excluirUsuario(usuario);
 		return "usuarios?faces-redirect=true";
 	}
+
+	public void exibir() {
+		usuario = usuarioBusiness.selecionar(usuario);
+	}
 }

@@ -61,6 +61,15 @@
             value="#{usuario}" />
       </h:commandButton>
     </h:column>
+    <h:column>
+        <f:facet name="header">
+            <h:outputText value="#{msg['commons.exibir']}" />
+        </f:facet>
+        <h:button outcome="usuariosExibir"
+            value="#{msg['commons.exibir']}">
+            <f:param name="id" value="#{usuario.id}" />
+        </h:button>
+    </h:column>
   </h:dataTable>
   <hr/>
   <h:commandButton action="#{usuarioBean.novo}" value="#{msg['commons.novo']}" />

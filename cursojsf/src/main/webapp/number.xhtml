@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title><h:outputText value="#{msg['page.number.title']}" /></title>
+</h:head>
+<h:body>
+   <h:form id="numberForm">
+     <h:outputLabel for="rangeField" value="#{msg['page.number.maximo']}: " />
+     <h:inputText id="rangeField" value="#{numberBean.range}" />
+     <h:commandButton action="#{numberBean.randomize}"
+        value="#{msg['commons.novo']}">
+        <f:ajax execute="@form" render="rangeField numField"
+           onevent="concluido" onerror="erro" />
+     </h:commandButton><br />
+     <h:outputText value="#{msg['page.number.title']}: " />
+     <h:outputText id="numField" value="#{numberBean.number}" /><hr />
+     <h:commandButton action="index" value="#{msg['commons.voltar']}" />
+   </h:form>
+   <script type="text/javascript">
+       function concluido(data) { alert("Evento: " + data.status); }
+       function erro(data) { alert("Erro: " + data); }
+   </script>
+</h:body>
+</html>

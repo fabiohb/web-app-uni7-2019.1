@@ -14,10 +14,16 @@
         <h:outputLabel for="palpite"
             value="#{msg['page.guess.label.numero']}: " />
         <h:inputText id="palpite" value="#{guessBean.palpite}" 
-        	valueChangeListener="#{guessBean.onChange}"
-        	onblur="this.form.submit()" />
-        <h:commandButton value="#{msg['page.guess.label.enviar']}"
-            action="#{guessBean.guess}" /> <br /><br />
+        	valueChangeListener="#{guessBean.onChange}">
+        	<f:ajax event="keyup"
+        		execute="@this" 
+        		render="outtext btnEnviar" />
+        </h:inputText>
+        <h:commandButton id="btnEnviar"
+        	value="#{msg['page.guess.label.enviar']}"
+        	disabled="#{guessBean.palpite eq null or guessBean.palpite le 0}"
+            action="#{guessBean.guess}" />
+        <br /><br />
         <h:outputFormat id="outtext" value="#{msg[guessBean.mensagem]}"
             styleClass="error">
             <f:param value="#{guessBean.tentativas}" />

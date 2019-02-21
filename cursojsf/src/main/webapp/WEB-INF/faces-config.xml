@@ -16,5 +16,11 @@
 			<supported-locale>en</supported-locale>
 		</locale-config>
 	</application>
+	
+	<lifecycle>
+        <phase-listener>
+            br.com.cursojsf.listeners.MyPhaseListener
+        </phase-listener>
+    </lifecycle>
 
 </faces-config>
