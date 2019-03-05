@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.json.bind.annotation.JsonbTypeAdapter;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 import br.com.cursorws.model.adapter.DateAdapter;
 
@@ -11,14 +15,24 @@ public class Usuario extends BaseModel implements Serializable {
 
 	private static final long serialVersionUID = -3064306490724801147L;
 
+	@NotNull
+	@Size(min = 11, max = 11)
 	private String cpf;
-	
+
+	@NotNull
+	@Size(min = 3, max = 100)
 	private String nome;
-	
+
+	@NotNull
+	@Email
+	@Size(min = 1, max = 300)
 	private String email;
-	
+
+	@NotNull
+	@Size(min = 6, max = 10)
 	private String senha;
-	
+
+	@Past
 	@JsonbTypeAdapter(DateAdapter.class)
 	private Date data;
 

@@ -28,6 +28,10 @@ var app = new Vue({
           this.exibirMensagem('error', 'Erro inesperado.');
         });
     },
+    
+    editar(id) {
+      window.location = 'usuarios-editar.html?id=' + id;
+    },
 
     exibirMensagem(tipo, texto) {
       this.mensagem = { tipo, texto, exibir: true };

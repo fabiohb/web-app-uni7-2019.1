@@ -51,8 +51,14 @@
               v-model="usuario.senha" :error-messages="erros.senha" />
           </v-flex>
         </v-layout>
+        <v-btn v-if="modoEdicao()" color="error" @click="excluir">
+          <v-icon>delete</v-icon> Excluir
+        </v-btn>
         <v-btn v-if="!modoEdicao()" color="primary" @click="inserir">
           <v-icon>save</v-icon> Inserir
+        </v-btn>
+        <v-btn v-if="modoEdicao()" color="success" @click="atualizar">
+          <v-icon>save</v-icon> Atualizar
         </v-btn>
       </v-container>
     </v-content>

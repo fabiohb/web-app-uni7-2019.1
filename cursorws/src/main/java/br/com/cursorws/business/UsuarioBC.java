@@ -2,10 +2,14 @@ package br.com.cursorws.business;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
 import br.com.cursorws.dao.Repositorio;
 import br.com.cursorws.model.Usuario;
@@ -61,7 +65,51 @@ public class UsuarioBC {
 		return usuario;
 	}
 
-	public Long inserir(Usuario usuario) {
+	public Long inserir(Usuario usuario) throws ValidacaoException {
+		validar(usuario);
 		return repositorio.inserir(usuario);
+	}
+
+	public void atualizar(Usuario usuario) throws UsuarioNaoEncontradoException, ValidacaoException {
+		validar(usuario);
+		if (!repositorio.atualizar(usuario)) {
+			throw new UsuarioNaoEncontradoException();
+		}
+	}
+	
+	public Usuario excluir(Long id) throws UsuarioNaoEncontradoException {
+		Usuario usuario = repositorio.excluir(Usuario.class, id);
+		if (usuario == null) {
+			throw new UsuarioNaoEncontradoException();
+		}
+		return usuario;
+	}
+	
+	public Usuario autenticarUsuario(String cpf, String senha) throws UsuarioInvalidoException {
+		for (Usuario usuario : selecionar()) {
+			if (usuario.getCpf().equals(cpf) && usuario.getSenha().equals(senha)) {
+				return usuario;
+			}
+		}
+		throw new UsuarioInvalidoException();
+	}
+	
+	private void validar(Usuario usuario) throws ValidacaoException {
+		
+		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+		
+		Set<ConstraintViolation<Usuario>> violations = validator.validate(usuario);
+		
+		if (!violations.isEmpty()) {
+			ValidacaoException validacaoException = new ValidacaoException();
+			for (ConstraintViolation<Usuario> violation : violations) {
+				String entidade = violation.getRootBeanClass().getSimpleName();
+				String propriedade = violation.getPropertyPath().toString();
+				String mensagem = violation.getMessage();
+
+				validacaoException.adicionar(entidade, propriedade, mensagem);
+			}
+			throw validacaoException;
+		}
 	}
 }

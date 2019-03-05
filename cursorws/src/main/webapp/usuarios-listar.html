@@ -34,6 +34,10 @@
           </template>
           <template slot="items" slot-scope="usuario">
             <td>
+              <v-btn flat fab small
+                @click="editar(usuario.item.id)">
+                <v-icon>edit</v-icon>
+              </v-btn>
               {{ usuario.item.cpf }}
             </td>
             <td>{{ usuario.item.nome }}</td>
